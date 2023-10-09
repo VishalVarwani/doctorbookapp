@@ -12,41 +12,60 @@ import { Card } from "react-native-paper";
 import Feather from "react-native-vector-icons/Feather";
 
 
-const dummyDate = [
-  "Today",
-  "22, Wed",
-  "23, Thur",
-  "24, Fri",
-  "25, Sat",
-  "9:00 AM",
-  "10:00 AM",
-  "11:00 AM",
-  "12:00 PM",
-  "1:00 PM",
-  "2:00 PM",
-  "3:00 PM",
-  "4:00 PM",
-  "5:00 PM",
-  "6:00 PM",
-];
 
 const AppointmentBookingPage = () => {
-  const borderWidth = 1 * PixelRatio.get();
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [buttonColors, setButtonColors] = useState({
+    textColor: "#CACACA",
+    borderColor: "#CACACA",
+    fontWeight: "normal",
+    backgroundColor1: "white",
+    backgroundColor2: "white",
+    backgroundColor3: "white",
+    backgroundColor4: "white",
+    backgroundColor5: "white",
+    backgroundColor6: "white",
+    backgroundColor7: "white",
+    backgroundColor8: "white"
 
-  const handleTimeSlotClick = (time) => {
-    if (time === selectedTime) {
-      setSelectedTime(null); // Unselect the time slot if already selected
+  });
+
+  const handleTimeSlotClick = () => {
+    // Toggle text color and border color based on the current colors
+    if (buttonColors.textColor === "#CACACA") {
+      setButtonColors({
+        textColor: "#1A936F",
+        fontWeight: "700",
+        backgroundColor1: "#CC9B66",
+        backgroundColor2: "#CC9B66",
+        backgroundColor3: "#CC9B66",
+        backgroundColor4: "#CC9B66",
+        backgroundColor5: "#CC9B66",
+        backgroundColor6: "#CC9B66",
+        backgroundColor7: "#CC9B66",
+        backgroundColor8: "#CC9B66",
+
+
+        borderColor: "#1A936F",
+      });
     } else {
-      setSelectedTime(time); // Select the time slot
+      setButtonColors({
+        textColor: "#CACACA",
+        borderColor: "#CACACA",
+        fontWeight: "normal",
+        backgroundColor1: "white",
+        backgroundColor2: "white",
+        backgroundColor3: "white",
+        backgroundColor4: "white",
+        backgroundColor5: "white",
+        backgroundColor6: "white",
+        backgroundColor7: "white",
+        backgroundColor8: "white",
+
+
+      });
     }
   };
 
-  // Split the dummyDate into three rows
-  const rows = [];
-  for (let i = 0; i < 3; i++) {
-    rows.push(dummyDate.slice(i * 5, (i + 1) * 5));
-  }
 
   return (
     <View>
@@ -81,7 +100,8 @@ const AppointmentBookingPage = () => {
 
           </View>
           </View>
-    <ScrollView  contentContainerStyle={styles.container}>
+          
+    <View  style={styles.container}>
      <View style={styles.card}>
      <Image
         style={[styles.rectangleIcon, styles.rectangleIconPosition]}
@@ -91,48 +111,26 @@ const AppointmentBookingPage = () => {
        </View>
       <Text style={[styles.bookAppointment, styles.ophtamologistTypo]}>{`Book
 Appointment`}</Text>
-      {rows.map((row, rowIndex) => (
-        <View key={rowIndex}>
-          {/* Separate view for the first row with dates */}
-          {rowIndex === 0 ? (
-            <View style={styles.dateRow}>
-              {row.map((item, index) => (
-                <View key={index} style={styles.dateItem}>
-                  <Text style={{ color: "black", fontWeight: "bold" }}>
-                    {item}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          ) : (
-            // Separate view for other rows with time slots
-            <View style={styles.timeSlotsRow}>
-              {row.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={[
-                    styles.timeSlot,
-                    {
-                      backgroundColor:
-                        item === selectedTime ? "#CC9B66" : "#FFFFFF",
-                    },
-                  ]}
-                  onPress={() => handleTimeSlotClick(item)}
-                >
-                  <Text
-                    style={{
-                      color: item === selectedTime ? "#FFFFFF" : "#000000",
-                      fontWeight: item === selectedTime ? "700" : "normal"
-                    }}
-                  >
-                    {item}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
-        </View>
-      ))}
+
+    
+      <View style={styles.todayParent}>
+        <Text style={[styles.today, styles.textTypo4]}>Today</Text>
+    
+        <Text style={[styles.text11, styles.textTypo3, {backgroundColor: buttonColors.backgroundColor1}]}    onPress={handleTimeSlotClick} >06 : 30</Text>
+        <Text style={[styles.text12, styles.textTypo2,{}]} onPress={handleTimeSlotClick}>05 : 30</Text>
+        <Text style={[styles.text13, styles.textPosition1,{}]} onPress={handleTimeSlotClick}>04 : 45</Text>
+        <Text style={[styles.text14, styles.textPosition1,{}]} onPress={handleTimeSlotClick}>01 : 30</Text>
+        <Text style={[styles.text15, styles.textPosition,{}]} onPress={handleTimeSlotClick}>09 : 30</Text>
+        <Text style={[styles.text16, styles.textPosition,{}]} onPress={handleTimeSlotClick}>02 : 40</Text>
+        <Text style={[styles.text17, styles.textPosition,{}]} onPress={handleTimeSlotClick}>07 : 30</Text>
+        <Text style={[styles.text18, styles.froTypo,{}]} onPress={handleTimeSlotClick}>08 : 30</Text>
+        <Text style={[styles.wed, styles.textTypo4]}>22, Wed</Text>
+        <Text style={[styles.thur, styles.textTypo4]}>23,Thur</Text>
+        <Text style={[styles.fro, styles.froTypo]}>24,Fro</Text>
+      </View>
+            
+         
+
             <View style={styles.groupParent}>
 
         <View style={[styles.swapnilKatareWrapper, styles.wrapperPosition]}>
@@ -157,33 +155,39 @@ Appointment`}</Text>
       <TouchableOpacity
         style={[
           styles.bookNowButton,
-          {  borderColor: selectedTime ? "#1A936F" : "#CCCCCC",
+          {  
           
           borderWidth: 2, 
           borderRadius: 10, 
+          top: 350,
+          borderColor: buttonColors.borderColor, // Apply the dynamic border color
+
+          // Set the background color dynamically
+
          },
         ]}
-        disabled={!selectedTime}
       >
         <Text
           style={{
-            fontWeight: selectedTime ? "700" : "normal", 
 
-            color: selectedTime ? "#1A936F" : "#CCCCCC", 
             height: 35,
             width: 242,
+            color: buttonColors.textColor, // Apply the dynamic text color
             borderRadius: 2,
-            borderColor: "#CACACA",
             fontSize: 22,
             textAlign: "center",
+            fontWeight: buttonColors.fontWeight
+
           }}
+          onPress={handleTimeSlotClick} // Call the function when the time slot is clicked
+
         >
           Confirm Appointment
         </Text>
         
       </TouchableOpacity>
       
-    </ScrollView>
+    </View>
    
       <Text style={[styles.newUser, styles.userTypo]}>New user</Text>
       <Text style={[styles.changeUser, styles.userTypo]}>Change user</Text>
@@ -202,6 +206,189 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
 
     
+  },
+   // timeslot start
+   todayParent: {
+    width: 394,
+    height: 135,
+    left: 22,
+    position: "absolute",
+  },
+  today: {
+    width: 56,
+    height: 22,
+    fontWeight: "600",
+    fontSize: 17,
+    left: 22,
+    top: 205,
+    borderBottomWidth: 1,
+    borderBottomColor: "black",
+    borderBottomEndRadius: 9,
+  
+  },
+  textTypo4: {
+    fontSize: 16,
+    color: "black",
+    textAlign: "left",
+    position: "absolute",
+  },
+  text11: {
+
+    borderWidth: 2,
+    borderColor: "#CC9B66",
+
+    borderRadius: 10,
+    height: 42,
+    width: 79,
+    paddingLeft: 12,
+    paddingTop: 9,
+    left: 22,
+    fontSize: 17,
+    color: "black",
+    textAlign: "left",
+    top: 248
+  },
+  text12: {
+    borderWidth: 2,
+    borderColor: "#CC9B66",
+
+    borderRadius: 10,
+    height: 42,
+    width: 79,
+    paddingLeft: 12,
+    paddingTop: 9,
+    left: 128,
+    fontSize: 17,
+    color: "black",
+    textAlign: "left",
+    position: "absolute",
+    top: 248,
+
+  },
+  text13: {
+    borderWidth: 2,
+    borderRadius: 10,
+    height: 42,
+    width: 79,
+    paddingLeft: 12,
+    paddingTop: 9,
+    borderColor: "#CC9B66",
+    left: 224,
+    fontSize: 17,
+    color: "black",
+    textAlign: "left",
+    position: "absolute",
+    top: 248,
+
+    
+  },
+  text14: {
+    borderWidth: 2,
+    borderColor: "#CC9B66",
+
+    borderRadius: 10,
+    height: 42,
+    width: 79,
+    paddingLeft: 12,
+    paddingTop: 9,
+    left: 332,
+    fontSize: 17,
+    color: "black",
+    textAlign: "left",
+    position: "absolute",
+    top: 248,
+  },
+  scrollContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+  },
+  text15: {
+    borderWidth: 2,
+    borderColor: "#CC9B66",
+
+    borderRadius: 10,
+    height: 42,
+    width: 79,
+    paddingLeft: 12,
+    paddingTop: 9,
+    left: 22,
+    fontSize: 17,
+    color: "black",
+    textAlign: "left",
+    position: "absolute",
+    top: 309,
+
+    
+  },
+  text16: {
+    borderWidth: 2,
+    borderColor: "#CC9B66",
+
+    borderRadius: 10,
+    height: 42,
+    width: 79,
+    paddingLeft: 12,
+    paddingTop: 9,
+    left: 128,
+    fontSize: 17,
+    color: "black",
+    textAlign: "left",
+    position: "absolute",
+    top: 309,
+
+  },
+  text17: {
+    borderWidth: 2,
+    borderColor: "#CC9B66",
+
+    borderRadius: 10,
+    height: 42,
+    width: 79,
+    paddingLeft: 12,
+    paddingTop: 9,
+    left: 225,
+    fontSize: 17,
+    color: "black",
+    textAlign: "left",
+    position: "absolute",
+    top: 309,
+
+  },
+  text18: {
+    borderWidth: 2,
+    borderColor: "#CC9B66",
+
+    borderRadius: 10,
+    height: 42,
+    width: 79,
+    paddingLeft: 12,
+    paddingTop: 9,
+    top: 309,
+    fontSize: 17,
+    left: 332,
+
+    color: "black",
+    textAlign: "left",
+    position: "absolute"  },
+  wed: {
+    left: 132,
+    width: 62,
+    height: 22,
+    top: 205,
+  },
+  thur: {
+    left: 242,
+    height: 22,
+    top: 205,
+    width: 59,
+  },
+  fro: {
+    fontSize: 17,
+    left: 352,
+    width: 64,
+    height: 22,
+    top: 205,
   },
   title: {
     fontSize: 20,
@@ -226,36 +413,9 @@ const styles = StyleSheet.create({
   circularImage: {
     height: 59,
     width: 59,
-    borderRadius: 20,
-  },
-  dateRow: {
-    flexDirection: "row",
-  },
-  dateItem: {
-    flex: 1, // Equal width for each date
-    padding: 10,
-    margin: 25,
-    alignItems: "center",
-    justifyContent: "center",
-    
-  },
-  timeSlotsRow: {
-    flexDirection: "row",
+      borderRadius: 20,
+    }, 
 
-  },
-  timeSlot: {
-
-    padding: 10,
-    margin: 10,
-    marginBottom: 19,
-    height: 40,
-    minWidth: 80, // Minimum width for each time slot
-    borderWidth: 1,
-    borderColor: "#CC9B66",
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   bookNowButton: {
     marginTop: 23,
     paddingVertical: 5,
@@ -424,7 +584,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     letterSpacing: 0.3,
     fontWeight: "500",
-    textDecoration: "underline",
     position: "absolute",
   },
   text23: {
@@ -453,6 +612,8 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     marginTop: -15,
   },
+ 
+
 });
 
 
